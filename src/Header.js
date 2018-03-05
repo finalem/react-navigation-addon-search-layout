@@ -40,8 +40,13 @@ export default class Header extends React.PureComponent {
 
   render() {
     let headerStyle = {};
+
     if (this.props.backgroundColor) {
       headerStyle.backgroundColor = this.props.backgroundColor;
+    }
+
+    if (this.props.height) {
+      headerStyle.height = this.props.height + STATUSBAR_HEIGHT + NOTCH_HEIGHT;
     }
 
     return (

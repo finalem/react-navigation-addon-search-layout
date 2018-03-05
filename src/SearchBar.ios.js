@@ -39,9 +39,7 @@ class PlaceholderButtonSearchBar extends React.PureComponent {
           <View style={styles.searchContainer}>
             <TextInput
               editable={false}
-              placeholder={
-                this.props.placeholder ? this.props.placeholder : 'Search'
-              }
+              placeholder={this.props.placeholder || 'Search'}
               placeholderTextColor={this.props.placeholderTextColor || '#ccc'}
               selectionColor={this.props.selectionColor}
               style={styles.searchInput}
@@ -112,51 +110,53 @@ export default class SearchBar extends React.PureComponent {
 
     return (
       <View style={styles.container}>
-        <View style={[styles.searchContainer, { width: inputWidth }]}>
-          <TextInput
-            ref={view => {
-              this._textInput = view;
-            }}
-            clearButtonMode="while-editing"
-            onChangeText={this._handleChangeText}
-            value={this.state.text}
-            autoCapitalize="none"
-            autoCorrect={false}
-            returnKeyType="search"
-            placeholder={
-              this.props.placeholder ? this.props.placeholder : 'Search'
+        <View style={{ flex:1 }}>
+          <View style={[styles.searchContainer, { width: inputWidth }]}>
+            <TextInput
+              ref={view => {
+                this._textInput = view;
+              }}
+              clearButtonMode="while-editing"
+              onChangeText={this._handleChangeText}
+              value={this.state.text}
+              autoCapitalize="none"
+              autoCorrect={false}
+              returnKeyType="search"
+              placeholder={
+                this.props.placeholder ? this.props.placeholder : 'Search'
+              }
+              placeholderTextColor={this.props.placeholderTextColor || '#ccc'}
+              onSubmitEditing={this._handleSubmit}
+              style={[styles.searchInput, searchInputStyle]}
+            />
+
+            <SearchIcon />
+          </View>
+
+          <View
+            key={
+              showCancelButton
+                ? 'visible-cancel-button'
+                : 'layout-only-cancel-button'
             }
-            placeholderTextColor={this.props.placeholderTextColor || '#ccc'}
-            onSubmitEditing={this._handleSubmit}
-            style={[styles.searchInput, searchInputStyle]}
-          />
-
-          <SearchIcon />
-        </View>
-
-        <View
-          key={
-            showCancelButton
-              ? 'visible-cancel-button'
-              : 'layout-only-cancel-button'
-          }
-          style={[
-            styles.buttonContainer,
-            { opacity: showCancelButton ? 1 : 0 },
-          ]}>
-          <TouchableOpacity
-            style={styles.button}
-            hitSlop={{ top: 15, bottom: 15, left: 15, right: 20 }}
-            onLayout={this._handleLayoutCancelButton}
-            onPress={this._handlePressCancelButton}>
-            <Text
-              style={{
-                fontSize: 17,
-                color: this.props.tintColor || '#007AFF',
-              }}>
-              Cancel
-            </Text>
-          </TouchableOpacity>
+            style={[
+              styles.buttonContainer,
+              { opacity: showCancelButton ? 1 : 0 },
+            ]}>
+            <TouchableOpacity
+              style={styles.button}
+              hitSlop={{ top: 15, bottom: 15, left: 15, right: 20 }}
+              onLayout={this._handleLayoutCancelButton}
+              onPress={this._handlePressCancelButton}>
+              <Text
+                style={{
+                  fontSize: 17,
+                  color: this.props.tintColor || '#007AFF',
+                }}>
+                Cancel
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
@@ -186,6 +186,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
+    alignItems:'center',
+    marginBottom: 10,
   },
   buttonContainer: {
     position: 'absolute',
