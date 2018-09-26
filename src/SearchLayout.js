@@ -37,6 +37,10 @@ export default class SearchLayout extends React.Component {
           height={this.props.headerHeight}
           backButton={Platform.OS === 'android'}>
           <SearchBar
+            {...( Platform.OS === 'ios' ? {
+              onCancelPress: this.props.onCancelPress,
+              cancelBtnText: this.props.cancelBtnText || 'Cancel'
+            } : {})}
             onChangeQuery={this._handleChangeQuery}
             onSubmit={this._handleSubmit}
             placeholderTextColor={this.props.searchInputPlaceholderTextColor}
