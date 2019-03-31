@@ -2,11 +2,19 @@ import React from 'react';
 import { Animated, Dimensions, Platform, StyleSheet, View } from 'react-native';
 import { withNavigation, HeaderBackButton } from 'react-navigation';
 
-const X_WIDTH = 375;
 const X_HEIGHT = 812;
-const { height: D_HEIGHT, width: D_WIDTH } = Dimensions.get('window');
+const isIPhoneXSize = ({ height, width }) => {
+  return height === X_HEIGHT || width === X_HEIGHT;
+};
+
+const XR_HEIGHT = 896;
+const isIPhoneXrSize = ({ height, width }) => {
+  return height === XR_HEIGHT || width === XR_HEIGHT;
+};
+
+const dimensions = Dimensions.get('window');
 const isIPhoneX =
-  Platform.OS === 'ios' && (D_HEIGHT === X_HEIGHT && D_WIDTH === X_WIDTH);
+  Platform.OS === 'ios' && (isIPhoneXSize(dimensions) || isIPhoneXrSize(dimensions));
 
 const NOTCH_HEIGHT = isIPhoneX ? 20 : 0;
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 50 : 56;
